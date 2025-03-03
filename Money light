@@ -1,0 +1,91 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Hypothetical functions for banking API
+def connect_to_bank(username, password):
+    # Logic to connect to bank API and verify credentials
+    return True
+
+def get_balance(username):
+    # Logic to retrieve balance from bank API
+    return 1000.0
+
+def store_money(username, amount):
+    # Logic to store money in user's account via bank API
+    return True
+
+def login():
+    name = entry_name.get()
+    username = entry_username.get()
+    password = entry_password.get()
+    
+    if connect_to_bank(username, password):
+        balance = get_balance(username)
+        messagebox.showinfo("Login", f"Welcome, {name}! Your balance is ${balance:.2f}.")
+    else:
+        messagebox.showerror("Login", "Invalid username or password.")
+
+def deposit():
+    username = entry_username.get()
+    amount = float(entry_amount.get())
+    
+    if store_money(username, amount):
+        messagebox.showinfo("Deposit", f"${amount:.2f} has been stored in your account.")
+    else:
+        messagebox.showerror("Deposit", "Failed to store money.")
+
+# Create the main window
+root = tk.Tk()
+root.title("Bank Account Manager")
+root.geometry("400x300")
+
+# Create a canvas to draw the background
+canvas = tk.Canvas(root, width=400, height=300)
+canvas.pack()
+
+# Draw the tie-dye background
+colors = ["#9b59b6", "#e91e63", "#3498db"]
+for i in range(400):
+    canvas.create_line(i, 0, i, 300, fill=colors[i % len(colors)])
+
+# Create the login frame
+frame_login = tk.Frame(root, bg="white")
+frame_login.place(relx=0.5, rely=0.4, anchor="center")
+
+# Name label and entry
+label_name = tk.Label(frame_login, text="Name:")
+label_name.grid(row=0, column=0, padx=10, pady=10)
+entry_name = tk.Entry(frame_login)
+entry_name.grid(row=0, column=1, padx=10, pady=10)
+
+# Username label and entry
+label_username = tk.Label(frame_login, text="Username:")
+label_username.grid(row=1, column=0, padx=10, pady=10)
+entry_username = tk.Entry(frame_login)
+entry_username.grid(row=1, column=1, padx=10, pady=10)
+
+# Password label and entry
+label_password = tk.Label(frame_login, text="Password:")
+label_password.grid(row=2, column=0, padx=10, pady=10)
+entry_password = tk.Entry(frame_login, show="*")
+entry_password.grid(row=2, column=1, padx=10, pady=10)
+
+# Login button
+button_login = tk.Button(frame_login, text="Login", command=login)
+button_login.grid(row=3, columnspan=2, pady=10)
+
+# Create the deposit frame
+frame_deposit = tk.Frame(root, bg="white")
+frame_deposit.place(relx=0.5, rely=0.8, anchor="center")
+
+# Amount label and entry
+label_amount = tk.Label(frame_deposit, text="Amount:")
+label_amount.grid(row=0, column=0, padx=10, pady=10)
+entry_amount = tk.Entry(frame_deposit)
+entry_amount.grid(row=0, column=1, padx=10, pady=10)
+
+# Deposit button
+button_deposit = tk.Button(frame_deposit, text="Deposit", command=deposit)
+button_deposit.grid(row=1, columnspan=2, pady=10)
+
+root.mainloop()
